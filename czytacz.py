@@ -32,7 +32,7 @@ def show_loading_bar():
     
     style = ttk.Style()
     style.configure("TProgressbar", thickness=20)
-    progress_bar = ttk.Progressbar(loading_window, variable=progress, maximum=100, style="TProgressbar")
+    progress_bar = ttk.Progressbar(loading_window, variable=progress, maximum=100, style="TProgressbar", mode="determinate")
     progress_bar.pack()
 
     descriptions = ["Reading your mind...", "Analyzing brainwaves...", "Processing...", "Almost there...", "Coming up with the solution..."]
@@ -40,9 +40,10 @@ def show_loading_bar():
     for i in range(5):
         description = descriptions[i]
         label.config(text=f"{description} ({i + 1}/5)")
-        progress.set((i + 1) * 20)
-        loading_window.update()
-        time.sleep(1)
+        for j in range(20):
+            progress.set(i * 20 + j)
+            loading_window.update()
+            time.sleep(0.05)  # Adjust the sleep time for smoother progress
 
     loading_window.destroy()
 
